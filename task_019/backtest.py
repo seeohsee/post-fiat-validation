@@ -14,7 +14,7 @@ def compute_sharpe_ratio(series, risk_free_rate=0.0):
     excess_returns = series - risk_free_rate
     return np.sqrt(252) * excess_returns.mean() / excess_returns.std(ddof=0) if excess_returns.std() > 0 else np.nan
 
-def fetch_close_prices(ticker, period="2y"):
+def fetch_close_prices(ticker, period="3y"):
     data = yf.download(ticker, period=period, interval='1d', group_by='ticker', auto_adjust=True, threads=True)
     df = data.xs('Close', level='Price', axis=1)
     df = df.dropna(axis=1, how='any')
@@ -92,9 +92,9 @@ def generate_pdf_report(ticker, df_results):
 
 # === Example Usage ===
 if __name__ == "__main__":
-    sample_dates = ['2024-01-16', '2024-03-01', '2024-06-01']
-    ticker = 'AAPL'
-    holding_periods = [5, 10, 21]
+    sample_dates = ['2023-01-03', '2023-06-01', '2023-09-15']
+    ticker = 'SPY'
+    holding_periods = [30]
 
     df_metrics = calculate_forward_metrics(ticker, sample_dates, holding_periods)
     print(df_metrics)
